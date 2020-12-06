@@ -1,7 +1,11 @@
 #include "WeatherSystemNode.h"
 
-void WeatherNode::ConstructVolume()
-{
-
+ WeatherNode::WeatherNode() {
 }
 
+ WeatherNode::~WeatherNode() {
+}
+
+void WeatherNode::ConstructVolume()
+{
+}

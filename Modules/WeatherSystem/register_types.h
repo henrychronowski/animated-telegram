@@ -1,5 +1,6 @@
-void register_WeatherSystemNode_types();
-void unregister_WeatherSystemNode_types();
+#pragma once
+void register_WeatherSystem_types();
+void unregister_WeatherSystem_types();
 
 /*
 	void register_MODULNAME_types();

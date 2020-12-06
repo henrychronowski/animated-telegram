@@ -1,13 +1,13 @@
+#pragma once
 //insert the Headername here
 #ifndef WEATHERSYSTEMNODE_H
 #define WEATHERSYSTEMNODE_H
 
-#include "scene/3d/spatial.h"
 #include "scene/3d/camera.h"
 #include "scene/3d/particles.h"
+#include "scene/3d/spatial.h"
 
-class WeatherNode : public Spatial
-{
+class WeatherNode : public Spatial {
 public:
 	WeatherNode();
 	~WeatherNode();
@@ -22,12 +22,12 @@ public:
 	void SetSnow(bool snowing) { mSnow = snowing; }
 	void SetWetCamera(bool wetCamera) { mWetCamera = wetCamera; }
 
-	Camera GetAffectedCamera() const { return mCamera; }
-	void SetAffectedCamera(Camera camera) { mCamera = camera; }
+	Camera* GetAffectedCamera() const { return mCamera; }
+	void SetAffectedCamera(Camera* camera) { mCamera = camera; }
 
-protected:
+private:
 	Particles mParticleNode;
-	Camera mCamera; //Camera affected by the WeatherNode
+	Camera* mCamera; //Camera affected by the WeatherNode
 
 	float mVolWidth;
 	float mVolLength;
