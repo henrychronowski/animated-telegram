@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=14 format=2]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
@@ -43,6 +43,38 @@ material = SubResource( 6 )
 subdivide_width = 32
 subdivide_depth = 32
 
+[sub_resource type="SpatialMaterial" id=8]
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_grow = true
+params_grow_amount = 0.0
+albedo_color = Color( 0.0392157, 0.329412, 0.517647, 0.94902 )
+
+[sub_resource type="ParticlesMaterial" id=9]
+emission_shape = 2
+emission_box_extents = Vector3( 10, 1, 10 )
+gravity = Vector3( 0, -50, 0 )
+
+[sub_resource type="CubeMesh" id=10]
+size = Vector3( 0.02, 0.5, 0.02 )
+
+[sub_resource type="SpatialMaterial" id=11]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+albedo_color = Color( 1, 1, 1, 0.670588 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+emission_shape = 2
+emission_box_extents = Vector3( 10, 1, 10 )
+gravity = Vector3( 0, -50, 0 )
+
+[sub_resource type="SphereMesh" id=13]
+radius = 0.1
+height = 0.2
+radial_segments = 50
+
 [node name="Spatial" type="Spatial"]
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
@@ -50,6 +82,21 @@ mesh = SubResource( 7 )
 material/0 = null
 
 [node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0315899, 0.333494, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0315899, 0.320577, 0 )
 
-[node name="Particles" type="Particles" parent="."]
+[node name="Rain" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.5812, 0 )
+material_override = SubResource( 8 )
+amount = 100
+speed_scale = 2.0
+process_material = SubResource( 9 )
+draw_pass_1 = SubResource( 10 )
+
+[node name="Snow" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106247, 8.57958, 0.0197207 )
+material_override = SubResource( 11 )
+emitting = false
+amount = 50
+speed_scale = 0.4
+process_material = SubResource( 12 )
+draw_pass_1 = SubResource( 13 )
