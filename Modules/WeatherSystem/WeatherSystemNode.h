@@ -6,8 +6,10 @@
 #include "scene/3d/camera.h"
 #include "scene/3d/particles.h"
 #include "scene/3d/spatial.h"
+#include "core/reference.h"
 
 class WeatherNode : public Spatial {
+	GDCLASS(WeatherNode, Spatial)
 public:
 	WeatherNode();
 	~WeatherNode();
@@ -24,6 +26,9 @@ public:
 
 	Camera* GetAffectedCamera() const { return mCamera; }
 	void SetAffectedCamera(Camera* camera) { mCamera = camera; }
+
+protected:
+	static void _bind_methods();
 
 private:
 	Particles mParticleNode;

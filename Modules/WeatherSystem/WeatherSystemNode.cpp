@@ -9,3 +9,8 @@
 void WeatherNode::ConstructVolume()
 {
 }
+
+void WeatherNode::_bind_methods()
+{
+
+}
