@@ -5,6 +5,7 @@
 
 #include "scene/3d/camera.h"
 #include "scene/3d/particles.h"
+#include "scene/3d/cpu_particles.h"
 #include "scene/3d/spatial.h"
 
 class WeatherNode : public Particles {

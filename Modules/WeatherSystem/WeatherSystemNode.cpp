@@ -1,10 +1,14 @@
 #include "WeatherSystemNode.h"
+#include "scene/resources/particles_material.h"
+#include "scene/resources/primitive_meshes.h"
 
 WeatherNode::WeatherNode()
 {
 	mVolWidth = 8.0f;
 	mVolHeight = 8.0f;
 	mVolLength = 8.0f;
+	mRain = true;
+	mSnow = false;
 
 	ConstructVolume();
 }
@@ -15,6 +19,35 @@ WeatherNode::WeatherNode()
 void WeatherNode::ConstructVolume()
 {
 	set_visibility_aabb(AABB(Vector3(-4, -4, -4), Vector3(mVolWidth, mVolHeight, mVolLength)));
+	if (mRain)
+	{
+		//Init Rain particle system
+		set_amount(100);
+		set_speed_scale(2.0f);
+
+		Ref<ParticlesMaterial> particleMat = memnew(ParticlesMaterial);
+		particleMat->set_emission_shape(ParticlesMaterial::EMISSION_SHAPE_BOX);
+		particleMat->set_emission_box_extents(Vector3(mVolWidth, mVolHeight, mVolLength));
+		particleMat->set_gravity(Vector3(0.0f, -50.0f, 0.0f));
+		set_process_material(*particleMat);
+
+		Ref<CubeMesh> rainMesh = memnew(CubeMesh);
+		rainMesh->set_size(Vector3(0.02f, 0.5f, 0.02f));
+		set_draw_pass_mesh(0, *rainMesh);
+
+		Ref<SpatialMaterial> rainMat = memnew(SpatialMaterial);
+		rainMat->set_flag(SpatialMaterial::FLAG_ALBEDO_FROM_VERTEX_COLOR, true);
+		rainMat->set_flag(SpatialMaterial::FLAG_UNSHADED, true);
+		rainMat->set_blend_mode(SpatialMaterial::BLEND_MODE_ADD);
+		rainMat->set_grow(1);
+		rainMat->set_albedo(Color(0.04f, 0.33f, 0.52f, 0.95f));
+
+		set_material_override(*rainMat);
+	}
+	else if(mSnow)
+	{
+
+	}
 }
 
 void WeatherNode::_notification(int p_what)
