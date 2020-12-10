@@ -10,6 +10,9 @@ WeatherNode::WeatherNode()
 	mRain = true;
 	mSnow = false;
 
+	mPrevRain = false;
+	mPrevSnow = false;
+
 	ConstructVolume();
 }
 
@@ -50,11 +53,34 @@ void WeatherNode::ConstructVolume()
 	}
 }
 
+void WeatherNode::CheckForUpdate()
+{
+	if (mRain && mSnow)
+	{
+		mRain = !mPrevRain;
+		mSnow = !mPrevSnow;
+	}
+	else if (!mPrevRain && mRain)
+	{
+		ConstructVolume();
+	}
+	else if (!mPrevSnow && mSnow)
+	{
+		ConstructVolume();
+	}
+	set_emitting(mRain || mSnow);
+	set_visibility_aabb(AABB(Vector3(-4, -4, -4), Vector3(mVolWidth, mVolHeight, mVolLength)));
+	static_cast<Ref<ParticlesMaterial> >(get_process_material())->set_emission_box_extents(Vector3(mVolWidth, mVolHeight, mVolLength));
+
+	mPrevRain = mRain;
+	mPrevSnow = mSnow;
+}
+
 void WeatherNode::_notification(int p_what)
 {
 	switch (p_what) {
 		case NOTIFICATION_PROCESS:
-			//ConstructVolume();
+			CheckForUpdate();
 			break;
 	}
 }

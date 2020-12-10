@@ -35,6 +35,8 @@ public:
 	void SetVolHeight(float height) { mVolHeight = height; }
 	void SetVolLength(float length) { mVolLength = length; }
 
+	void CheckForUpdate();
+
 	void _notification(int p_what);
 
 protected:
@@ -50,6 +52,9 @@ private:
 	bool mRain; //Is raining
 	bool mSnow; //Is snowing
 	bool mWetCamera; //Should rain affect camera
+
+	bool mPrevRain;
+	bool mPrevSnow;
 };
 
 #endif

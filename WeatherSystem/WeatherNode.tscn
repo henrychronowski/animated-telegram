@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://transparentMat.tres" type="Material" id=1]
+[ext_resource path="res://WeatherNode.gd" type="Script" id=2]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
@@ -44,22 +45,6 @@ shader_param/normalmap = SubResource( 5 )
 material = SubResource( 6 )
 subdivide_width = 32
 subdivide_depth = 32
-
-[sub_resource type="SpatialMaterial" id=8]
-flags_unshaded = true
-vertex_color_use_as_albedo = true
-params_blend_mode = 1
-params_grow = true
-params_grow_amount = 0.0
-albedo_color = Color( 0.0392157, 0.329412, 0.517647, 0.94902 )
-
-[sub_resource type="ParticlesMaterial" id=9]
-emission_shape = 2
-emission_box_extents = Vector3( 10, 1, 10 )
-gravity = Vector3( 0, -50, 0 )
-
-[sub_resource type="CubeMesh" id=10]
-size = Vector3( 0.02, 0.5, 0.02 )
 
 [sub_resource type="SpatialMaterial" id=11]
 flags_transparent = true
@@ -108,17 +93,8 @@ material/0 = null
 [node name="OmniLight" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0315899, 0.320577, 0 )
 
-[node name="Rain" type="Particles" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.5812, 0 )
-material_override = SubResource( 8 )
-amount = 100
-speed_scale = 2.0
-process_material = SubResource( 9 )
-draw_pass_1 = SubResource( 10 )
-
 [node name="Snow" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106247, 8.57958, 0.0197207 )
-visible = false
 material_override = SubResource( 11 )
 emitting = false
 amount = 50
@@ -127,7 +103,7 @@ process_material = SubResource( 12 )
 draw_pass_1 = SubResource( 13 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2224, 8.31834, 7.3077 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.672, 17.6203, 15.3644 )
 environment = SubResource( 14 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="."]
@@ -140,3 +116,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5764, 17.6764, 0 )
 material_override = SubResource( 16 )
 process_material = SubResource( 17 )
 draw_pass_1 = SubResource( 18 )
+script = ExtResource( 2 )
