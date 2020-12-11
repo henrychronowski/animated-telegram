@@ -1,0 +1,6 @@
+[gd_resource type="ParticlesMaterial" format=2]
+
+[resource]
+emission_shape = 2
+emission_box_extents = Vector3( 8, 8, 8 )
+gravity = Vector3( 0, -50, 0 )
