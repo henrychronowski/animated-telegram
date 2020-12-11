@@ -2,121 +2,39 @@
 
 [ext_resource path="res://WeatherNode.gd" type="Script" id=2]
 
-[sub_resource type="Shader" id=1]
-code = "shader_type spatial;
-
-uniform sampler2D noise;
-uniform sampler2D normalmap;
-uniform float height_scale = 0.5;
-
-varying vec2 tex_position;
-
-void vertex() {
-	tex_position = VERTEX.xz / 2.0 + 0.5;
-	float height = texture(noise, tex_position).x;
-	VERTEX.y += height * height_scale;
-}
-
-void fragment(){
-	NORMALMAP = texture(normalmap,tex_position).xyz;
-}
-
-"
-
-[sub_resource type="OpenSimplexNoise" id=2]
-
-[sub_resource type="NoiseTexture" id=3]
-noise = SubResource( 2 )
-
-[sub_resource type="OpenSimplexNoise" id=4]
-
-[sub_resource type="NoiseTexture" id=5]
-as_normalmap = true
-noise = SubResource( 4 )
-
-[sub_resource type="ShaderMaterial" id=6]
-shader = SubResource( 1 )
-shader_param/height_scale = 0.5
-shader_param/noise = SubResource( 3 )
-shader_param/normalmap = SubResource( 5 )
-
-[sub_resource type="PlaneMesh" id=7]
-material = SubResource( 6 )
-subdivide_width = 32
-subdivide_depth = 32
-
-[sub_resource type="SpatialMaterial" id=8]
-flags_transparent = true
-flags_unshaded = true
-vertex_color_use_as_albedo = true
-albedo_color = Color( 1, 1, 1, 0.670588 )
-
-[sub_resource type="ParticlesMaterial" id=9]
-emission_shape = 2
-emission_box_extents = Vector3( 10, 1, 10 )
-gravity = Vector3( 0, -50, 0 )
-
-[sub_resource type="SphereMesh" id=10]
-radius = 0.1
-height = 0.2
-radial_segments = 50
-
-[sub_resource type="Environment" id=11]
+[sub_resource type="Environment" id=1]
 background_mode = 1
 
-[sub_resource type="PlaneMesh" id=12]
-size = Vector2( 10, 10 )
-subdivide_width = 128
-subdivide_depth = 128
-
-[sub_resource type="Environment" id=11]
-background_mode = 1
-
-[sub_resource type="SpatialMaterial" id=13]
+[sub_resource type="SpatialMaterial" id=2]
 flags_unshaded = true
 vertex_color_use_as_albedo = true
 params_blend_mode = 1
 albedo_color = Color( 0.9, 0.9, 1, 0.9 )
 
-[sub_resource type="ParticlesMaterial" id=14]
+[sub_resource type="ParticlesMaterial" id=3]
 emission_shape = 2
-emission_box_extents = Vector3( 8, 8, 8 )
+emission_box_extents = Vector3( 10, 10, 10 )
 gravity = Vector3( 0, -20, 0 )
 
-[sub_resource type="CubeMesh" id=15]
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 0.02, 0.08, 0.02 )
 
-size = Vector3( 0.02, 0.5, 0.02 )
+[node name="Spatial" type="Spatial"]
 
-[node name="Snow" type="Particles" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106247, 20.412, 0.0197207 )
-material_override = SubResource( 8 )
-emitting = false
-amount = 50
-speed_scale = 0.4
-process_material = SubResource( 9 )
-draw_pass_1 = SubResource( 10 )
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0315899, 0.320577, 0 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.672, 17.6203, 15.3644 )
-environment = SubResource( 11 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="."]
-transform = Transform( 0.527608, 0.849488, 0, -0.849488, 0.527608, 0, 0, 0, 1, 5.89786, 2.44106, 0 )
-mesh = SubResource( 12 )
-material/0 = ExtResource( 1 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.672, 17.6203, 6.94669 )
+environment = SubResource( 1 )
 
 [node name="WeatherNode" type="WeatherNode" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5749, 17.7745, -0.016243 )
-material_override = SubResource( 13 )
-amount = 300
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.672, 17.6203, 15.3644 )
-environment = SubResource( 11 )
-
-[node name="WeatherNode" type="WeatherNode" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5764, 17.6764, 0 )
-material_override = SubResource( 13 )
-amount = 100
-process_material = SubResource( 14 )
-draw_pass_1 = SubResource( 15 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5764, 22.0299, 0 )
+material_override = SubResource( 2 )
+visibility_aabb = AABB( -4, -4, -4, 10, 10, 10 )
+process_material = SubResource( 3 )
+draw_pass_1 = SubResource( 4 )
+mVolWidth = 10.0
+mVolHeight = 10.0
+mVolLength = 10.0
 script = ExtResource( 2 )
