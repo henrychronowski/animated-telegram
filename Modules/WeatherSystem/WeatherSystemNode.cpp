@@ -7,8 +7,8 @@ WeatherNode::WeatherNode()
 	mVolWidth = 8.0f;
 	mVolHeight = 8.0f;
 	mVolLength = 8.0f;
-	mRain = true;
-	mSnow = false;
+	mRain = false;
+	mSnow = true;
 
 	mPrevRain = false;
 	mPrevSnow = false;
@@ -49,7 +49,28 @@ void WeatherNode::ConstructVolume()
 	}
 	else if(mSnow)
 	{
+		//Init Snow particle system
+		set_amount(100);
+		set_speed_scale(0.5f);
 
+		Ref<ParticlesMaterial> particleMat = memnew(ParticlesMaterial);
+		particleMat->set_emission_shape(ParticlesMaterial::EMISSION_SHAPE_BOX);
+		particleMat->set_emission_box_extents(Vector3(mVolWidth, mVolHeight, mVolLength));
+		particleMat->set_gravity(Vector3(0.0f, -20.0f, 0.0f));
+		set_process_material(*particleMat);
+
+		Ref<CubeMesh> snowMesh = memnew(CubeMesh);
+		snowMesh->set_size(Vector3(0.02f, 0.08f, 0.02f));
+		set_draw_pass_mesh(0, *snowMesh);
+
+		Ref<SpatialMaterial> snowMat = memnew(SpatialMaterial);
+		snowMat->set_flag(SpatialMaterial::FLAG_ALBEDO_FROM_VERTEX_COLOR, true);
+		snowMat->set_flag(SpatialMaterial::FLAG_UNSHADED, true);
+		snowMat->set_blend_mode(SpatialMaterial::BLEND_MODE_ADD);
+		snowMat->set_grow(1);
+		snowMat->set_albedo(Color(0.9f, 0.9f, 1.0f, 0.9f));
+
+		set_material_override(*snowMat);
 	}
 }
 
