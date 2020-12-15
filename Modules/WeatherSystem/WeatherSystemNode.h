@@ -31,9 +31,20 @@ public:
 	float GetVolHeight() const { return mVolHeight; }
 	float GetVolLength() const { return mVolLength; }
 
+	int GetAmt() const { return mParticleAmt; }
+	float GetSpeed() const { return mParticleSpeed; }
+	float GetGravity() const { return mGravityStrength; }
+
 	void SetVolWidth(float width) { mVolWidth = width; }
 	void SetVolHeight(float height) { mVolHeight = height; }
 	void SetVolLength(float length) { mVolLength = length; }
+
+	void SetAmt(int amt) {
+		mParticleAmt = amt;
+		mAmtChanged = true;
+	}
+	void SetSpeed(float speed) { mParticleSpeed = speed; }
+	void SetGravity(float grav) { mGravityStrength = grav; }
 
 	void CheckForUpdate();
 
@@ -44,10 +55,14 @@ protected:
 
 private:
 	//Camera mCamera = Camera(); //Camera affected by the WeatherNode
+	int mParticleAmt;
+	bool mAmtChanged;
 
 	float mVolWidth;
 	float mVolLength;
 	float mVolHeight;
+	float mParticleSpeed;
+	float mGravityStrength;
 
 	bool mRain; //Is raining
 	bool mSnow; //Is snowing
